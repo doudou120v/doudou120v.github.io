@@ -6,56 +6,52 @@
   <title>Bienvenue</title>
   <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
   <link rel="stylesheet" href="style.css">
-  <style>
-    .form-card {
-      max-width: 500px;
-      margin: auto;
-      padding: 30px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .form-card h1 {
-      margin-bottom: 20px;
-    }
-
-    .form-card input, .form-card textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    .form-card button {
-      background-color: #0077b6;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .form-card button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  </style>
 </head>
 <body>
   <div class="full-page">
-    <div class="form-card">
-      <h1>Bienvenue 👋</h1>
-      <p>Avant d’accéder à la météo, dis-moi qui tu es et ce que tu veux faire.</p>
+    <div class="card">
+      <div class="card-content">
+        <p class="title is-level-4">👋 Bienvenue sur ton assistant météo</p>
+        <p class="text is-level-1">Avant d’accéder à la météo, indique ton prénom et ton intention :</p>
 
-      <input type="text" id="userName" placeholder="Ton prénom" />
-      <textarea id="userIntent" rows="3" placeholder="Ton intention (ex. suivre ma journée, voir la météo…)"></textarea>
+        <div class="columns is-multiline">
+          <div class="column is-6">
+            <p class="title is-level-6">Ton prénom</p>
+            <div class="field">
+              <div class="control has-icons-right">
+                <input id="userName" type="text" class="input is-default" placeholder="Ex. Doudou120" />
+                <div>
+                  <span class="icon is-small icon-right">
+                    <i class="tri-user" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </div>
+              <p class="text help is-default">Ce champ est requis</p>
+            </div>
+          </div>
 
-      <button id="enterButton" disabled>Accéder à la météo</button>
+          <div class="column is-6">
+            <p class="title is-level-6">Ton intention</p>
+            <div class="field">
+              <div class="control has-icons-right">
+                <input id="userIntent" type="text" class="input is-default" placeholder="Ex. suivre ma journée, voir la météo…" />
+                <div>
+                  <span class="icon is-small icon-right">
+                    <i class="tri-search" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </div>
+              <p class="text help is-default">Ce champ est requis</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 20px;">
+          <div class="control">
+            <button id="enterButton" class="button is-conversion" type="button" disabled>Accéder à la météo</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -74,9 +70,13 @@
     intentInput.addEventListener('input', checkFields);
 
     enterButton.addEventListener('click', () => {
-      const name = encodeURIComponent(nameInput.value.trim());
-      const intent = encodeURIComponent(intentInput.value.trim());
-      window.location.href = `index.html?name=${name}&intent=${intent}`;
+      const name = nameInput.value.trim();
+      const intent = intentInput.value.trim();
+
+      sessionStorage.setItem('userName', name);
+      sessionStorage.setItem('userIntent', intent);
+
+      window.location.href = 'index.html';
     });
   </script>
 </body>

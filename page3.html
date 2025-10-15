@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Journée de travail - Meudon </title>
+  <title>Journée de travail - Meudon</title>
   <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
   <style>
     html, body {
       height: 100%;
@@ -131,12 +133,24 @@
             <button id="applyTimeBtn" class="button is-primary">Appliquer l’heure</button>
             <button id="resetTimeBtn" class="button is-secondary">Réinitialiser l’heure</button>
           </div>
+
+          <div class="field" style="margin-top: 30px; text-align: center;">
+            <div class="control">
+              <a href="index.html" class="button is-secondary">← Retour à la page de choix</a>
+            </div>
+          </div>
         </div>
       </section>
     </main>
   </div>
 
   <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('✅ Service Worker enregistré'))
+        .catch(err => console.error('❌ Erreur Service Worker', err));
+    }
+
     (function () {
       'use strict';
       const WORK_START = "09:30";
@@ -207,18 +221,14 @@
           percentageLabel.textContent = 'La journée n’a pas encore commencé.';
           endMessage.style.display = 'none';
         } else if (now >= end) {
-          dayProgress.value = 100;
-          dayProgress.setAttribute('aria-valuenow', '100');
-          percentageLabel.textContent = '100% de la journée de travail écoulée';
-          endMessage.style.display = 'block';
-        } else {
+
+                  } else {
           const total = end - start;
           const elapsed = now - start;
           const pct = Math.max(0, Math.min(100, Number(((elapsed / total) * 100).toFixed(1))));
           dayProgress.value = pct;
           dayProgress.setAttribute('aria-valuenow', String(pct));
-       
-                    percentageLabel.textContent = `${pct}% de la journée `;
+          percentageLabel.textContent = `${pct}% de la journée de travail écoulée`;
           endMessage.style.display = 'none';
         }
       }
@@ -274,5 +284,3 @@
   </script>
 </body>
 </html>
-
-          

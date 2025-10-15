@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Journée de travail — Paris</title>
   <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -15,6 +15,8 @@
       <div class="card-content">
         <p class="title is-level-4">Temps restant à ta journée</p>
         <p class="title is-level-5">Meudon la Forêt, France</p>
+
+        <p id="userInfo" class="meta" style="margin-bottom: 1rem;"></p>
 
         <p class="text is-level-1">Heure locale actuelle :</p>
         <p id="parisTime" class="title is-level-3" aria-live="polite">--:--:--</p>
@@ -26,30 +28,19 @@
           </div>
           <div class="condition">Partiellement ensoleillé</div>
           <div class="details">
-            <div>Température :</div>
-            <div>16 °C</div>
-            <div>Ressenti :</div>
-            <div>15 °C</div>
-            <div>Humidité :</div>
-            <div>63 %</div>
-            <div>Vent :</div>
-            <div>18 km/h (NNE)</div>
+            <div>Température :</div><div>16 °C</div>
+            <div>Ressenti :</div><div>15 °C</div>
+            <div>Humidité :</div><div>63 %</div>
+            <div>Vent :</div><div>18 km/h (NNE)</div>
           </div>
         </div>
 
-
-
         <div class="progress-container" role="region" aria-label="Progression de la journée">
-          <progress id="dayProgress" class="progress is-info" value="0" max="100" aria-valuemin="0" aria-valuemax="100"
-            aria-valuenow="0">0%</progress>
+          <progress id="dayProgress" class="progress is-info" value="0" max="100" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</progress>
 
           <div class="progress-legends" aria-hidden="true">
-            <div class="progress-legend-start">
-              <p id="legendStart" class="text">09h30</p>
-            </div>
-            <div class="progress-legend-end">
-              <p id="legendEnd" class="text">17h00</p>
-            </div>
+            <div class="progress-legend-start"><p id="legendStart" class="text">09h30</p></div>
+            <div class="progress-legend-end"><p id="legendEnd" class="text">17h00</p></div>
           </div>
 
           <div class="remaining-time" aria-live="polite" aria-atomic="true">
@@ -60,11 +51,34 @@
           <p id="percentageLabel" class="percentage-label">0% de la journée de travail écoulée</p>
           <p id="endMessage" class="end-message">Ta journée est terminée.</p>
         </div>
+
+        <div class="field" style="margin-top: 30px; text-align: center;">
+          <div class="control">
+            <a href="index.html" class="button is-secondary">← Retour à la page de choix</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('✅ Service Worker enregistré'))
+        .catch(err => console.error('❌ Erreur Service Worker', err));
+    }
+
+    function showUserInfo() {
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get('name');
+      const intent = params.get('intent');
+      const infoEl = document.getElementById('userInfo');
+      if (name && intent && infoEl) {
+        infoEl.textContent = `👤 Bonjour ${name} — objectif : ${intent}`;
+      }
+    }
+    showUserInfo();
+
     (function () {
       'use strict';
 
@@ -92,16 +106,6 @@
         const [hour, minute] = parts;
         return { hour, minute };
       }
-      function showUserInfo() {
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('name');
-        const intent = params.get('intent');
-        const infoEl = document.getElementById('userInfo');
-        if (name && intent && infoEl) {
-          infoEl.textContent = `👤 Bonjour ${name} — objectif : ${intent}`;
-        }
-      }
-      showUserInfo();
 
       function msToHMS(ms) {
         if (ms <= 0) return '00:00:00';
@@ -170,29 +174,17 @@
         fetch(WEATHER_URL)
           .then(response => response.json())
           .then(data => {
-            if (!data || !data.current || !data.location) {
-              weatherInfoEl.innerHTML = `<p>❌ Données météo incomplètes.</p>`;
-              return;
-            }
-
-            const description = data.current.condition.text;
-            const temp = Math.round(data.current.temp_c);
-            const feelsLike = Math.round(data.current.feelslike_c);
-            const humidity = data.current.humidity;
-            const windSpeed = Math.round(data.current.wind_kph);
-            const windDir = data.current.wind_dir;
-            const icon = data.current.condition.icon;
-
-            weatherInfoEl.innerHTML = `
-        <div class="icon"><img src="https:${icon}" alt="${description}" /></div>
-        <div class="condition">${description}</div>
-        <div class="details">
-          <div>Température :</div><div>${temp} °C</div>
-          <div>Ressenti :</div><div>${feelsLike} °C</div>
-          <div>Humidité :</div><div>${humidity} %</div>
-          <div>Vent :</div><div>${windSpeed} km/h (${windDir})</div>
-        </div>
-      `;
+            if (!data || !data.current || !data.location)
+                          weatherInfoEl.innerHTML = `
+              <div class="icon"><img src="https:${icon}" alt="${description}" /></div>
+              <div class="condition">${description}</div>
+              <div class="details">
+                <div>Température :</div><div>${temp} °C</div>
+                <div>Ressenti :</div><div>${feelsLike} °C</div>
+                <div>Humidité :</div><div>${humidity} %</div>
+                <div>Vent :</div><div>${windSpeed} km/h (${windDir})</div>
+              </div>
+            `;
           })
           .catch(err => {
             weatherInfoEl.innerHTML = `<p>❌ Impossible de charger la météo.</p>`;
@@ -200,8 +192,8 @@
           });
       }
 
-
       let intervalId = null;
+
       function tickOnce() {
         updateAll(getParisNow());
       }
@@ -240,5 +232,4 @@
     })();
   </script>
 </body>
-
 </html>

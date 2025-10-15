@@ -92,6 +92,16 @@
         const [hour, minute] = parts;
         return { hour, minute };
       }
+      function showUserInfo() {
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        const intent = params.get('intent');
+        const infoEl = document.getElementById('userInfo');
+        if (name && intent && infoEl) {
+          infoEl.textContent = `👤 Bonjour ${name} — objectif : ${intent}`;
+        }
+      }
+      showUserInfo();
 
       function msToHMS(ms) {
         if (ms <= 0) return '00:00:00';

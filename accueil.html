@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bienvenue</title>
+  <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-card {
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .form-card h1 {
+      margin-bottom: 20px;
+    }
+
+    .form-card input, .form-card textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .form-card button {
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .form-card button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="full-page">
+    <div class="form-card">
+      <h1>Bienvenue 👋</h1>
+      <p>Avant d’accéder à la météo, dis-moi qui tu es et ce que tu veux faire.</p>
+
+      <input type="text" id="userName" placeholder="Ton prénom" />
+      <textarea id="userIntent" rows="3" placeholder="Ton intention (ex. suivre ma journée, voir la météo…)"></textarea>
+
+      <button id="enterButton" disabled>Accéder à la météo</button>
+    </div>
+  </div>
+
+  <script>
+    const nameInput = document.getElementById('userName');
+    const intentInput = document.getElementById('userIntent');
+    const enterButton = document.getElementById('enterButton');
+
+    function checkFields() {
+      const nameFilled = nameInput.value.trim().length > 0;
+      const intentFilled = intentInput.value.trim().length > 0;
+      enterButton.disabled = !(nameFilled && intentFilled);
+    }
+
+    nameInput.addEventListener('input', checkFields);
+    intentInput.addEventListener('input', checkFields);
+
+    enterButton.addEventListener('click', () => {
+      const name = encodeURIComponent(nameInput.value.trim());
+      const intent = encodeURIComponent(intentInput.value.trim());
+      window.location.href = `index.html?name=${name}&intent=${intent}`;
+    });
+  </script>
+</body>
+</html>

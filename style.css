@@ -39,8 +39,7 @@ body {
 }
 
 .progress-legends {
-  display: flex;
-  color #ffffff; 
+  display: flex; 
   justify-content: space-between;
   margin-top: 5px;
 }
@@ -128,4 +127,5 @@ body {
     margin-bottom: 5px;
   }
 }
+
 

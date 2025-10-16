@@ -2,230 +2,274 @@
 <html lang="fr">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>À propos de moi</title>
-  <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
-  <style>
-    body {
-      background-color: #f5f5f5;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>À propos de moi</title>
+    <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
 
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
 
-    .box {
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    }
+        .box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
 
-    .photo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 1rem;
-      cursor: pointer;
-    }
+        .photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
 
-    .section-title {
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
+        .section-title {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
 
-    .text-block {
-      margin-bottom: 1.5rem;
-      color: #444;
-    }
+        .text-block {
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
 
-    body.konami-mode {
-      background-image: url('https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif');
-      background-size: cover;
-      color: white;
-    }
+        body.konami-mode {
+            background-image: url('https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif');
+            background-size: cover;
+            color: white;
+        }
 
-    #easter-egg,
-    #dev-mode,
-    #code-box {
-      display: none;
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.85);
-      color: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      z-index: 9999;
-    }
+        #easter-egg,
+        #dev-mode,
+        #code-box {
+            display: none;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            z-index: 9999;
+        }
 
-    #easter-egg {
-      top: 20%;
-    }
+        #easter-egg {
+            top: 20%;
+        }
 
-    #dev-mode {
-      bottom: 10%;
-      font-family: monospace;
-      color: #fff;
-    }
+        #dev-mode {
+            bottom: 10%;
+            font-family: monospace;
+            color: #fff;
+        }
 
-    #code-box {
-      top: 30%;
-      width: 80%;
-      max-height: 60%;
-      overflow-y: auto;
-      font-family: monospace;
-      background-color: #111;
-      color: #fff;
-      text-align: left;
-    }
+        #code-box {
+            top: 10%;
+            width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            font-family: monospace;
+            background-color: #111;
+            color: #fff;
+            text-align: left;
+        }
 
-    #show-code-btn {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #ccc;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      color: black;
-    }
-  </style>
+        .show-code-btn {
+            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #ccc;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: black;
+        }
+
+        .code-section {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .code-section.active {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
-  <section class="hero is-base is-overlapped has-pattern-dark">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title is-level-2 is-inverted">À propos de moi</h1>
-        <p class="text is-inverted has-text-weight-bold">Bienvenue sur ma page de présentation pour mon stage de 3ᵉ !</p>
-      </div>
+    <section class="hero is-base is-overlapped has-pattern-dark">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-level-2 is-inverted">À propos de moi</h1>
+                <p class="text is-inverted has-text-weight-bold">Bienvenue sur ma page de présentation pour mon stage de
+                    3ᵉ !</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="box">
+            <img src="https://avatars.githubusercontent.com/u/52258372?v=4" alt="Photo de Doudou120" class="photo"
+                id="profile-photo" title="Cliquez pour agrandir" onclick="togglePhotoSize()" />
+
+            <h2 class="title is-level-3">Je m'appelle Doudou120 (le développeur) aka Vincent (l'élève)</h2>
+
+            <div class="text-block">
+                <p>Je suis élève de 3ᵉ dans la classe F. Fanon, et j'effectue mon stage chez Bouygues Telecom Pro à
+                    Meudon.</p>
+            </div>
+
+            <h3 class="section-title">Ce que j'aime</h3>
+            <div class="text-block">
+                <p>J'aime beaucoup le sport, surtout les courses d'endurance, la nourriture, jouer aux jeux vidéo, et
+                    passer du temps dehors.</p>
+            </div>
+
+            <h3 class="section-title">Mon stage</h3>
+            <div class="text-block">
+                <p>Durant mon stage, j'assiste à des réunions (pas toujours tout beau tout rose), mais au moins cela
+                    montre le vrai côté du travail. Je mange à la cantine de l'entreprise — et c'est étonnamment bon.
+                </p>
+            </div>
+
+            <h3 class="section-title">Ce que j'apprends</h3>
+            <div class="text-block">
+                <p>Ce stage m'a permis de mieux comprendre le monde du travail et celui de l'informatique. Il m'a aussi
+                    fait découvrir une nouvelle passion : le code.</p>
+                <p><em>(Astuce : tape le "Konami Code" pour une surprise.)</em></p>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <div class="container">
-    <div class="box">
-      <img src="https://via.placeholder.com/150" alt="Ma photo" class="photo"
-        onclick="alert('Tu m’as cliqué. Bien joué détective.')" />
-
-      <h2 class="title is-level-3">Je m'appelle Doudou120 (le développeur) aka Vincent (l'élève)</h2>
-
-      <div class="text-block">
-        <p>Je suis élève de 3ᵉ dans la classe F. Fanon, et j'effectue mon stage chez Bouygues Telecom Pro à Meudon.</p>
-      </div>
-
-      <h3 class="section-title">Ce que j'aime</h3>
-      <div class="text-block">
-        <p>J'aime beaucoup le sport, surtout les courses d'endurance, la nourriture, jouer aux jeux vidéo, et passer du temps dehors.</p>
-      </div>
-
-      <h3 class="section-title">Mon stage</h3>
-      <div class="text-block">
-        <p>Durant mon stage, j'assiste à des réunions (pas toujours tout beau tout rose), mais au moins cela montre le vrai côté du travail. Je mange à la cantine de l'entreprise — et c'est étonnamment bon.</p>
-      </div>
-
-      <h3 class="section-title">Ce que j'apprends</h3>
-      <div class="text-block">
-        <p>Ce stage m'a permis de mieux comprendre le monde du travail et celui de l'informatique. Il m'a aussi fait découvrir une nouvelle passion : le code.</p>
-        <p><em>(Astuce : tape le "Konami Code" pour une surprise.)</em></p>
-      </div>
+    <div id="easter-egg">
+        <h3>Secret débloqué</h3>
+        <p>Vous avez trouvé l'easter egg.</p>
     </div>
-  </div>
 
-  <div id="easter-egg">
-    <h3>Secret débloqué</h3>
-    <p>Vous avez trouvé l'easter egg.</p>
-  </div>
+    <div id="dev-mode">
+        <h3>Mode développeur activé</h3>
+        <p>Bienvenue dans les coulisses du code, Vincent.</p>
+        <button id="show-code-btn" onclick="document.getElementById('code-box').style.display='block'">Souhaitez-vous
+            voir le code des pages ?</button>
+    </div>
 
-  <div id="dev-mode">
-    <h3>Mode développeur activé</h3>
-    <p>Bienvenue dans les coulisses du code, Vincent.</p>
-    <button id="show-code-btn" onclick="document.getElementById('code-box').style.display='block'">Souhaitez-vous voir le code des pages ?</button>
-  </div>
+    <div id="code-box">
+        <h4>Fichiers du projet</h4>
+        <div>
+            <button class="show-code-btn" onclick="showCode('index')">index.html</button>
+            <button class="show-code-btn" onclick="showCode('about')">about.html</button>
+            <button class="show-code-btn" onclick="showCode('page1')">page1.html</button>
+        </div>
 
-  <div id="code-box">
-    <h4>Extraits de code :</h4>
+        <div id="code-index" class="code-section active">
+            <h5>index.html</h5>
+            <pre>
+&lt;!doctype html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;title&gt;Bienvenue&lt;/title&gt;
+  ...
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a href="/page1.html"&gt;Météo&lt;/a&gt;
+  &lt;a href="/about.html"&gt;À propos de moi&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        </div>
 
-    <h5>HTML</h5>
-    <pre>
-&lt;div class="box"&gt;
+        <div id="code-about" class="code-section">
+            <h5>about.html</h5>
+            <pre>
+&lt;!doctype html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;title&gt;À propos de moi&lt;/title&gt;
+  ...
+&lt;/head&gt;
+&lt;body&gt;
   &lt;h2&gt;Je m'appelle Doudou120&lt;/h2&gt;
   &lt;p&gt;Stage chez Bouygues Telecom Pro&lt;/p&gt;
-&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+        </div>
 
-&lt;a class="link" href="/page1.html"&gt;Météo&lt;/a&gt;
-&lt;a class="link" href="/about.html"&gt;À propos de moi&lt;/a&gt;
-    </pre>
-
-    <h5>CSS</h5>
-    <pre>
-#timeImage {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-
-.title.is-level-4 {
-  text-align: center;
-}
-    </pre>
-
-    <h5>JavaScript</h5>
-    <pre>
+        <div id="code-page1" class="code-section">
+            <h5>page1.html</h5>
+            <pre>
+&lt;script&gt;
 function msToHMS(ms) {
   let seconds = Math.floor(ms / 1000);
   let hours = Math.floor(seconds / 3600);
   seconds %= 3600;
   let minutes = Math.floor(seconds / 60);
   seconds %= 60;
-  return [hours, minutes, seconds].map(v => String(v).padStart(2, '0')).join(':');
+  return [hours, minutes, seconds].map(v =&gt; String(v).padStart(2, '0')).join(':');
 }
-    </pre>
-  </div>
+&lt;/script&gt;
+      </pre>
+        </div>
+    </div>
 
-  <script>
-    const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-    let konamiIndex = 0;
-    document.addEventListener('keydown', function (e) {
-      if (e.keyCode === konamiCode[konamiIndex]) {
-        konamiIndex++;
-        if (konamiIndex === konamiCode.length) {
-          document.body.classList.add('konami-mode');
-          alert("Bravo. Vous avez trouvé l'easter egg. Tapez devmode sur votre clavier pour un autre secret.");
-          document.getElementById('easter-egg').style.display = 'block';
-          setTimeout(() => {
-            document.getElementById('easter-egg').style.display = 'none';
-          }, 5000);
+    <script>
+        // Konami Code
+        const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+        document.addEventListener('keydown', function (e) {
+            if (e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    document.body.classList.add('konami-mode');
+                    alert("Bravo. Vous avez trouvé l'easter egg. Tapez devmode sur votre clavier pour un autre secret.");
+                    document.getElementById('easter-egg').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('easter-egg').style.display = 'none';
+                    }, 5000);
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // DevMode activation
+        let devBuffer = '';
+        document.addEventListener('keydown', function (e) {
+            const key = e.key.toLowerCase();
+            devBuffer += key;
+            if (devBuffer.length > 10) devBuffer = devBuffer.slice(-10);
+            if (devBuffer.includes('devmode')) {
+                document.getElementById('dev-mode').style.display = 'block';
+                alert("Mode développeur activé.");
+            }
+        });
+
+        // Onglets de code
+        function showCode(section) {
+            const sections = document.querySelectorAll('.code-section');
+            sections.forEach(s => s.classList.remove('active'));
+            const target = document.getElementById('code-' + section);
+            if (target) target.classList.add('active');
         }
-      } else {
-        konamiIndex = 0;
-      }
-    });
-
-    let devBuffer = '';
-    document.addEventListener('keydown', function (e) {
-      const key = e.key.toLowerCase();
-      devBuffer += key;
-      if (devBuffer.length > 10) devBuffer = devBuffer.slice(-10);
-      if (devBuffer.includes('devmode')) {
-        document.getElementById('dev-mode').style.display = 'block';
-        alert("Mode développeur activé.");
-      }
-    });
-  </script>
+    </script>
 </body>
 
 </html>
-    

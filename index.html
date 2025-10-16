@@ -12,6 +12,43 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="météo patate" />
   <link rel="manifest" href="/site.webmanifest" />
+  <style>
+    body {
+      text-align: center;
+    }
+
+    .list {
+      display: inline-block;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .title.is-level-6 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .columns.is-multiline.has-gap-8 {
+      justify-content: center;
+      display: flex;
+    }
+
+    .column.is-6 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .list-item-content .row {
+      text-align: center;
+    }
+
+    .link {
+      font-weight: bold;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,7 +57,7 @@
       <section class="hero is-base is-overlapped has-pattern-dark">
         <div class="hero-body">
           <div class="container">
-            <h1 class="title is-level-2 is-inverted">Choisissez où vous voulez aller .</h1>
+            <h1 class="title is-level-2 is-inverted">Choisissez où vous voulez aller.</h1>
             <p class="text is-inverted has-text-weight-bold">
               Et en même temps profitez d'Internet dès l'abonnement et même en cas de coupure grâce à une clé 4G dans
               les nouvelles offres Bbox.
@@ -55,17 +92,13 @@
         <li class="list-item">
           <div class="list-item-content">
             <div class="rows">
-              <div class="row"><a class="link" href="/page3.html">Pour savoir quand est-ce le moment de la patate</a>
-              </div>
+              <div class="row"><a class="link" href="/page3.html">Pour savoir quand est-ce le moment de la patate</a></div>
             </div>
           </div>
         </li>
       </ul>
     </div>
   </div>
-
-
 </body>
-
 
 </html>

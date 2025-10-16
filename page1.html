@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Journée de travail — Paris</title>
   <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
+  <style>
+    #timeImage {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .title.is-level-4 {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -91,180 +104,150 @@
                 </div>
               </div>
             </div>
-            <div class="segmented-control" style="margin: 20px 1 ; text-align: center;">
-              <a href="index.html" class="segmented-control-item">Accueil</a>
-              <a href="page3.html" class="segmented-control-item">Patate</a>
+            <div class="row">
+              <div data-testid="separator" class="divider">
+                <p class="divider-content"></p>
+              </div>
             </div>
-            
+
+
+            <body>
+              <div class="progress-container" aria-hidden="false">
+                <p class="title is-level-4" style="margin-top:20px;">Image du moment</p>
+                <img id="timeImage" src="" alt="Visuel horaire" loading="lazy" />
+
+                <div class="segmented-control" style="margin: 20px 1; text-align: center;">
+                  <a href="index.html" class="segmented-control-item">Accueil</a>
+                  <a href="page1.html" class="segmented-control-item">Météo</a>
+                </div>
+              </div>
+              </section>
+
+
+
           </div>
         </div>
-      </div>
 
-      <script>
 
-        function showUserInfo() {
-          const params = new URLSearchParams(window.location.search);
-          const name = params.get('name');
-          const intent = params.get('intent');
-          const infoEl = document.getElementById('userInfo');
-          if (name && intent && infoEl) {
-            infoEl.textContent = `👤 Bonjour ${name} — objectif : ${intent}`;
-          }
-        }
-        showUserInfo();
+        <script>
 
-        (function () {
-          'use strict';
 
-          const WORK_START = "09:30";
-          const WORK_END = "17:00";
-          const WEATHER_API_KEY = '93d10ec96a364ca89b2143951251410';
-          const CITY_NAME = 'Meudon';
-          const WEATHER_URL = `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(CITY_NAME)}&lang=fr`;
+          (function () {
+            'use strict';
+            const WORK_START = "09:30";
+            const WORK_END = "17:00";
+            const parisTimeEl = document.getElementById('parisTime');
+            const dayProgress = document.getElementById('dayProgress');
+            const percentageLabel = document.getElementById('percentageLabel');
+            const endMessage = document.getElementById('endMessage');
+            const legendStart = document.getElementById('legendStart');
+            const legendEnd = document.getElementById('legendEnd');
+            const timeImage = document.getElementById('timeImage');
+            const manualTimeInput = document.getElementById('manualTime');
+            const resetTimeBtn = document.getElementById('resetTimeBtn');
 
-          const parisTimeEl = document.getElementById('parisTime');
-          const remainingTimeEl = document.getElementById('remainingTime');
-          const remainingLabelEl = document.getElementById('remainingLabel');
-          const dayProgress = document.getElementById('dayProgress');
-          const percentageLabel = document.getElementById('percentageLabel');
-          const endMessage = document.getElementById('endMessage');
-          const legendStart = document.getElementById('legendStart');
-          const legendEnd = document.getElementById('legendEnd');
-          const weatherInfoEl = document.getElementById('weatherInfo');
+            let manualTime = null;
 
-          const pad2 = n => String(n).padStart(2, '0');
-
-          function parseHM(hm) {
-            const parts = hm.split(':').map(Number);
-            if (parts.length !== 2 || parts.some(isNaN)) return null;
-            const [hour, minute] = parts;
-            return { hour, minute };
-          }
-
-          function msToHMS(ms) {
-            if (ms <= 0) return '00:00:00';
-            const totalSeconds = Math.floor(ms / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            return `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`;
-          }
-
-          function initLegends() {
-            const s = parseHM(WORK_START);
-            const e = parseHM(WORK_END);
-            legendStart.textContent = s ? `${pad2(s.hour)}h${pad2(s.minute)}` : '--:--';
-            legendEnd.textContent = e ? `${pad2(e.hour)}h${pad2(e.minute)}` : '--:--';
-          }
-
-          function getParisNow() {
-            return new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
-          }
-
-          function updateAll(now) {
-            const timeText = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-            parisTimeEl.textContent = timeText;
-
-            const start = parseHM(WORK_START);
-            const end = parseHM(WORK_END);
-            if (!start || !end) return;
-
-            const startDate = new Date(now);
-            startDate.setHours(start.hour, start.minute, 0, 0);
-            const endDate = new Date(now);
-            endDate.setHours(end.hour, end.minute, 0, 0);
-            if (endDate <= startDate) endDate.setDate(endDate.getDate() + 1);
-
-            if (now < startDate) {
-              const diff = startDate - now;
-              remainingTimeEl.textContent = msToHMS(diff);
-              remainingLabelEl.textContent = 'Temps avant le début :';
-              dayProgress.value = 0;
-              dayProgress.setAttribute('aria-valuenow', '0');
-              percentageLabel.textContent = 'La journée n’a pas encore commencé.';
-              endMessage.style.display = 'none';
-            } else if (now >= endDate) {
-              remainingTimeEl.textContent = '00:00:00';
-              remainingLabelEl.textContent = 'Temps restant :';
-              dayProgress.value = 100;
-              dayProgress.setAttribute('aria-valuenow', '100');
-              percentageLabel.textContent = '100% de la journée de travail écoulée';
-              endMessage.style.display = '';
-            } else {
-              const diff = endDate - now;
-              const total = endDate - startDate;
-              const elapsed = now - startDate;
-              const pct = Math.max(0, Math.min(100, Number(((elapsed / total) * 100).toFixed(1))));
-              remainingTimeEl.textContent = msToHMS(diff);
-              remainingLabelEl.textContent = 'Temps restant :';
-              dayProgress.value = pct;
-              dayProgress.setAttribute('aria-valuenow', String(pct));
-              percentageLabel.textContent = `${pct}% de la journée de travail écoulée`;
-              endMessage.style.display = 'none';
+            function parseHM(hm) {
+              const parts = hm.split(':').map(Number);
+              if (parts.length !== 2 || parts.some(isNaN)) return null;
+              return { hour: parts[0], minute: parts[1] };
             }
-          }
 
-          function updateWeather() {
-            fetch(WEATHER_URL)
-              .then(response => response.json())
-              .then(data => {
-                if (!data || !data.current || !data.location)
-                  weatherInfoEl.innerHTML = `
-              <div class="icon"><img src="https:${icon}" alt="${description}" /></div>
-              <div class="condition">${description}</div>
-              <div class="details">
-                <div>Température :</div><div>${temp} °C</div>
-                <div>Ressenti :</div><div>${feelsLike} °C</div>
-                <div>Humidité :</div><div>${humidity} %</div>
-                <div>Vent :</div><div>${windSpeed} km/h (${windDir})</div>
-              </div>
-            `;
-              })
-              .catch(err => {
-                weatherInfoEl.innerHTML = `<p>❌ Impossible de charger la météo.</p>`;
-                console.error('Erreur météo :', err);
+            function formatLabelHM(hm, sep = 'h') {
+              const p = parseHM(hm);
+              return p ? `${String(p.hour).padStart(2, '0')}${sep}${String(p.minute).padStart(2, '0')}` : '--:--';
+            }
+
+            function getParisNow() {
+              return new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+            }
+
+            legendStart.textContent = formatLabelHM(WORK_START);
+            legendEnd.textContent = formatLabelHM(WORK_END);
+
+            function updateDayProgress(now) {
+              const startHM = parseHM(WORK_START);
+              const endHM = parseHM(WORK_END);
+              if (!startHM || !endHM) return;
+
+              const start = new Date(now);
+              start.setHours(startHM.hour, startHM.minute, 0, 0);
+              const end = new Date(now);
+              end.setHours(endHM.hour, endHM.minute, 0, 0);
+              if (end <= start) end.setDate(end.getDate() + 1);
+
+              if (now < start) {
+                dayProgress.value = 0;
+                dayProgress.setAttribute('aria-valuenow', '0');
+                percentageLabel.textContent = 'La journée n’a pas encore commencé.';
+                endMessage.style.display = 'none';
+              } else if (now >= end) {
+                dayProgress.value = 100;
+                dayProgress.setAttribute('aria-valuenow', '100');
+                percentageLabel.textContent = '100% de la journée de travail écoulée';
+                endMessage.style.display = 'block';
+              } else {
+                const total = end - start;
+                const elapsed = now - start;
+                const pct = Math.max(0, Math.min(100, Number(((elapsed / total) * 100).toFixed(1))));
+                dayProgress.value = pct;
+                dayProgress.setAttribute('aria-valuenow', String(pct));
+
+                percentageLabel.textContent = `${pct}% de la journée `;
+                endMessage.style.display = 'none';
+              }
+            }
+
+            function updateTimeImage(now) {
+              const hour = now.getHours();
+              const minute = now.getMinutes();
+              const timeInMinutes = hour * 60 + minute;
+
+              const images = [
+                { from: 540, to: 690, src: "https://www.bing.com/th/id/OIP.SfmtoITTswDirJEeBm6XagHaHa?w=189&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2", alt: "Matin tôt" },
+                { from: 690, to: 735, src: "https://th.bing.com/th/id/OIP.b8hMSsdwY_vxMfa1FyLzbQHaHa?w=168&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3", alt: "Matin" },
+                { from: 735, to: 810, src: "https://www.bing.com/th/id/OIP.OuxuKGlCziS6LEanbVq8aAHaEV?w=247&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2", alt: "Fin de matinée" },
+                { from: 810, to: 960, src: "https://www.bing.com/th/id/OIP.w9CDBehHrRAYmciz3SGYTgHaE8?w=254&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2", alt: "Après-midi" },
+                { from: 960, to: 990, src: "https://www.bing.com/th/id/OIP.731dy08emdOSmne0XQVqzQHaHa?w=171&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2", alt: "Fin d'après-midi" },
+                { from: 990, to: 1080, src: "https://www.bing.com/th/id/OIP.w9CDBehHrRAYmciz3SGYTgHaE8?w=254&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2", alt: "Soirée précoce" }
+              ];
+
+              const defaultImg = {
+                src: "https://www.bing.com/th/id/OIP.eUtHVgtGROvWrx20ysxOIAHaEK?w=248&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2",
+                alt: "Nuit"
+              };
+
+              const found = images.find(i => timeInMinutes >= i.from && timeInMinutes < i.to) || defaultImg;
+
+              if (timeImage.getAttribute('src') !== found.src) {
+                timeImage.src = found.src;
+                timeImage.alt = found.alt;
+              }
+            }
+
+            timeImage.addEventListener('error', function () {
+              timeImage.style.display = 'none';
+            });
+
+            function tick() {
+              const now = manualTime || getParisNow();
+              parisTimeEl.textContent = now.toLocaleTimeString('fr-FR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
               });
-          }
-
-          let intervalId = null;
-
-          function tickOnce() {
-            updateAll(getParisNow());
-          }
-
-          function startTicker() {
-            tickOnce();
-            const now = Date.now();
-            const timeout = 1000 - (now % 1000);
-            setTimeout(() => {
-              tickOnce();
-              intervalId = setInterval(tickOnce, 1000);
-            }, timeout);
-          }
-
-          function stopTicker() {
-            if (intervalId !== null) {
-              clearInterval(intervalId);
-              intervalId = null;
+              updateDayProgress(now);
+              updateTimeImage(now);
             }
-          }
 
-          document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-              stopTicker();
-            } else {
-              startTicker();
-            }
-          }, { passive: true });
+            tick();
+            const timer = setInterval(tick, 1000);
 
-          initLegends();
-          startTicker();
-          updateWeather();
-
-          window.__WORK_CONFIG = { WORK_START, WORK_END };
-          window.__forceUpdateWorkClock = () => updateAll(getParisNow());
-        })();
-      </script>
+            window.__WORK_CONFIG = { WORK_START, WORK_END };
+          })();
+        </script>
 </body>
 
 </html>

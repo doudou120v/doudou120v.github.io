@@ -69,20 +69,9 @@
       border-radius: 8px;
       margin-top: 20px;
       display: block;
+
     }
 
-    .manual-time {
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .manual-time input {
-      max-width: 200px;
-    }
-
-    .manual-time .button {
-      margin-top: 10px;
-    }
 
     @media screen and (max-width: 768px) {
       .progress-legends {
@@ -108,29 +97,29 @@
 </head>
 
 <body>
-    <div class="columns is-multiline">
-      <div class="column">
-        <section class="hero is-base is-overlapped has-pattern-dark">
-          <div class="hero-body">
-            <div class="container">
-              <h1 class="title is-level-2 is-inverted">Temps restant à ta journée</h1>
-              <p class="text is-inverted is-inverted has-text-weight-bold">Profitez d'Internet dès l'abonnement et même en cas de coupure grâce à une clé 4G dans les nouvelles offres Bbox.</p>
-            </div>
-          </div>
-        </section>
-        <section class="section">
+  <div class="columns is-multiline">
+    <div class="column">
+      <section class="hero is-base is-overlapped has-pattern-dark">
+        <div class="hero-body">
           <div class="container">
-            <div class="box">
-              <div class="box-content">
-                <p class="title is-level-2">Meudon la Forêt, France</p>
-              </div>
+            <h1 class="title is-level-2 is-inverted">Temps restant à ta journée</h1>
+            <p class="text is-inverted is-inverted has-text-weight-bold">Profitez d'Internet dès l'abonnement et même en
+              cas de coupure grâce à une clé 4G dans les nouvelles offres Bbox.</p>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="box">
+            <div class="box-content">
+              <p class="title is-level-2">Meudon la Forêt, France</p>
             </div>
           </div>
-        </section>
-      </div>
-    </div>
-    <main role="main" aria-labelledby="statusTitle">
-      <section class="card" id="statusCard">
+        </div>
+      </section>
+
+
+      <section class="card">
         <div class="card-content">
           <h2 id="statusTitle" class="sr-only">Statut horaire</h2>
 
@@ -157,15 +146,20 @@
           <div class="progress-container" aria-hidden="false">
             <p class="title is-level-4" style="margin-top:20px;">Image du moment</p>
             <img id="timeImage" src="" alt="Visuel horaire" loading="lazy" />
-          </div>
 
-          <div class="segmented-control" style="margin: 20px 1; text-align: center;">
-            <a href="index.html" class="segmented-control-item">Accueil</a>
-            <a href="page1.html" class="segmented-control-item">Météo</a>
+            <div class="segmented-control" style="margin: 20px 1; text-align: center;">
+              <a href="index.html" class="segmented-control-item">Accueil</a>
+              <a href="page1.html" class="segmented-control-item">Météo</a>
+            </div>
           </div>
-        </div>
       </section>
+
+
+
     </div>
+  </div>
+
+
   <script>
 
 

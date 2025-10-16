@@ -6,9 +6,9 @@ Interface web qui affiche :
 - La météo actuelle en direct via WeatherAPI
 
 ## Fonctionnalités
-✅ Progression de la journée  
-✅ Météo dynamique  
-✅ Interface responsive
+- Progression de la journée  
+- Météo dynamique  
+- Interface responsive
 
 ## Installation
 1. Cloner le repo

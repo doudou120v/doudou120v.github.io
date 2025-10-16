@@ -230,11 +230,11 @@
                   </div>
                 </div>`;
             } else {
-              weatherInfoEl.innerHTML = `<p>❌ Données météo non disponibles.</p>`;
+              weatherInfoEl.innerHTML = `<p> Données météo non disponibles.</p>`;
             }
           })
           .catch(err => {
-            weatherInfoEl.innerHTML = `<p>❌ Impossible de charger la météo.</p>`;
+            weatherInfoEl.innerHTML = `<p> Impossible de charger la météo.</p>`;
             console.error('Erreur météo :', err);
           });
       }
@@ -305,7 +305,7 @@
           }
         }, { passive: true });
 
-        // Remplacer l'écouteur d'erreur pour afficher une image de secours au lieu de cacher l'image
+        
         timeImage.addEventListener('error', function () {
           timeImage.src = "https://www.bing.com/th/id/OIP.eUtHVgtGROvWrx20ysxOIAHaEK?w=248&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2";
           timeImage.alt = "Image de secours";
@@ -314,7 +314,7 @@
 
         startTicker();
         updateWeather();
-        setInterval(updateWeather, 15 * 60 * 1000); // Update weather every 15 minutes
+        setInterval(updateWeather, 15 * 60 * 1000); 
 
         window.__WORK_CONFIG = { WORK_START, WORK_END };
         window.__forceUpdateWorkClock = () => tick();

@@ -165,8 +165,7 @@
             <img id="timeImage" src="" alt="Visuel horaire" loading="lazy" />
           </div>
 
-          <div>
-            <button id="applyTimeBtn" class="button is-primary"></button>
+          
 
           <div class="field" style="margin-top: 30px; text-align: center;">
             <div class="control">
@@ -193,23 +192,9 @@
       const legendEnd = document.getElementById('legendEnd');
       const timeImage = document.getElementById('timeImage');
       const manualTimeInput = document.getElementById('manualTime');
-      const applyTimeBtn = document.getElementById('applyTimeBtn');
       const resetTimeBtn = document.getElementById('resetTimeBtn');
 
       let manualTime = null;
-
-      applyTimeBtn.addEventListener('click', () => {
-        const input = manualTimeInput.value;
-        if (input) {
-          const [h, m] = input.split(':').map(Number);
-          if (!isNaN(h) && !isNaN(m)) {
-            const now = getParisNow();
-            now.setHours(h, m, 0, 0);
-            manualTime = now;
-            tick();
-          }
-        }
-      });
 
       function parseHM(hm) {
         const parts = hm.split(':').map(Number);

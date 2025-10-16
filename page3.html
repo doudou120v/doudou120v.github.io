@@ -108,17 +108,60 @@
 </head>
 
 <body>
-
-
-  <div class="columns is-multiline">
-    <div class="column">
-      <section class="hero is-base is-overlapped has-pattern-dark">
-        <div class="hero-body">
+    <div class="columns is-multiline">
+      <div class="column">
+        <section class="hero is-base is-overlapped has-pattern-dark">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title is-level-2 is-inverted">Temps restant à ta journée</h1>
+              <p class="text is-inverted is-inverted has-text-weight-bold">Profitez d'Internet dès l'abonnement et même en cas de coupure grâce à une clé 4G dans les nouvelles offres Bbox.</p>
+            </div>
+          </div>
+        </section>
+        <section class="section">
           <div class="container">
-            <h1 class="title is-level-2 is-inverted">Temps restant à ta journée</h1>
-            <p class="text is-inverted is-inverted has-text-weight-bold">Profitez dInternet dès labonnement et même en
-              cas
-              de coupure grâce à une clé 4G dans les nouvelles offres Bbox.</p>
+            <div class="box">
+              <div class="box-content">
+                <p class="title is-level-2">Meudon la Forêt, France</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <main role="main" aria-labelledby="statusTitle">
+      <section class="card" id="statusCard">
+        <div class="card-content">
+          <h2 id="statusTitle" class="sr-only">Statut horaire</h2>
+
+          <p class="text is-level-1">Heure locale actuelle :</p>
+          <p id="parisTime" class="title is-level-3" aria-live="polite" aria-atomic="true">--:--:--</p>
+
+          <div class="progress-container" role="region" aria-label="Progression de la journée de travail">
+            <progress id="dayProgress" class="progress is-info" value="0" max="100" aria-valuemin="0"
+              aria-valuemax="100" aria-valuenow="0"></progress>
+
+            <div class="progress-legends" aria-hidden="true">
+              <div class="progress-legend-start">
+                <p id="legendStart" class="text">--:--</p>
+              </div>
+              <div class="progress-legend-end">
+                <p id="legendEnd" class="text">--:--</p>
+              </div>
+            </div>
+
+            <p id="percentageLabel" class="percentage-label">0% de la journée de travail écoulée</p>
+            <p id="endMessage" class="end-message" role="status">Ta journée est terminée.</p>
+          </div>
+
+          <div class="progress-container" aria-hidden="false">
+            <p class="title is-level-4" style="margin-top:20px;">Image du moment</p>
+            <img id="timeImage" src="" alt="Visuel horaire" loading="lazy" />
+          </div>
+
+          <div class="segmented-control" style="margin: 20px 1; text-align: center;">
+            <a href="index.html" class="segmented-control-item">Accueil</a>
+            <a href="page1.html" class="segmented-control-item">Météo</a>
           </div>
         </div>
       </section>
@@ -132,7 +175,7 @@
         </div>
       </section>
     </div>
-  </div>
+  
   <main role="main" aria-labelledby="statusTitle">
     <section class="card" id="statusCard">
       <div class="card-content">

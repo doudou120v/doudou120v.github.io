@@ -1,6 +1,6 @@
 {
-  "name": "météo patate",
-  "short_name": "patate",
+  "name": "patate",
+  "short_name": "Heure",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

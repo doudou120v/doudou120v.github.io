@@ -4,9 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Journée de travail - Meudon</title>
+  <title>Journée de travail - Meudon </title>
   <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
-  <!-- <link rel="stylesheet" href="style.css"> -->
   <style>
     html,
     body {
@@ -107,7 +106,10 @@
     }
   </style>
 </head>
+<<<<<<< HEAD
 
+=======
+>>>>>>> a10d3515c13dc075f0c4f67cb927b9bb767a04e1
 <body>
   <div class="full-page">
     <header role="banner" aria-label="En-tête">
@@ -248,14 +250,18 @@
           percentageLabel.textContent = 'La journée n’a pas encore commencé.';
           endMessage.style.display = 'none';
         } else if (now >= end) {
-
+          dayProgress.value = 100;
+          dayProgress.setAttribute('aria-valuenow', '100');
+          percentageLabel.textContent = '100% de la journée de travail écoulée';
+          endMessage.style.display = 'block';
         } else {
           const total = end - start;
           const elapsed = now - start;
           const pct = Math.max(0, Math.min(100, Number(((elapsed / total) * 100).toFixed(1))));
           dayProgress.value = pct;
           dayProgress.setAttribute('aria-valuenow', String(pct));
-          percentageLabel.textContent = `${pct}% de la journée de travail écoulée`;
+       
+                    percentageLabel.textContent = `${pct}% de la journée `;
           endMessage.style.display = 'none';
         }
       }

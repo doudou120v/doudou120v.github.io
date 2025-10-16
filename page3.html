@@ -127,13 +127,6 @@
             <img id="timeImage" src="" alt="Visuel horaire" loading="lazy" />
           </div>
 
-          <div class="manual-time">
-            <label for="manualTime" class="text is-level-2" style="display:block;margin-bottom:8px;">Choisir une heure manuellement</label>
-            <input type="time" id="manualTime" class="input" />
-            <button id="applyTimeBtn" class="button is-primary">Appliquer l’heure</button>
-            <button id="resetTimeBtn" class="button is-secondary">Réinitialiser l’heure</button>
-          </div>
-
           <div class="field" style="margin-top: 30px; text-align: center;">
             <div class="control">
               <a href="index.html" class="button is-secondary">← Retour à la page de choix</a>
@@ -163,19 +156,6 @@
       const resetTimeBtn = document.getElementById('resetTimeBtn');
 
       let manualTime = null;
-
-      applyTimeBtn.addEventListener('click', () => {
-        const input = manualTimeInput.value;
-        if (input) {
-          const [h, m] = input.split(':').map(Number);
-          if (!isNaN(h) && !isNaN(m)) {
-            const now = getParisNow();
-            now.setHours(h, m, 0, 0);
-            manualTime = now;
-            tick();
-          }
-        }
-      });
 
       resetTimeBtn.addEventListener('click', () => {
         manualTime = null;

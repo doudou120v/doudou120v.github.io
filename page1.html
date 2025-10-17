@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Journée de travail — Paris</title>
   <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Heure" />
+  <link rel="manifest" href="/site.webmanifest" />
   <style>
     #timeImage {
       display: block;
@@ -22,11 +28,109 @@
 </head>
 
 <body>
+
   <div class="full-page">
     <div class="card">
       <div class="card-content">
-        <p class="title is-level-4">Temps restant a votre journée</p>
 
+        <!-- Styles à ajouter dans <head> (ou fusionner avec vos styles existants) -->
+        <style>
+          /* Hero : textes en blanc + plus de volume */
+          .hero.has-pattern-dark {
+            color: #fff;
+            padding: 3rem 1rem;
+            /* plus d'espace vertical */
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            transform: translateZ(0);
+          }
+
+          /* motif léger derrière le hero (fusionné avec overlay sombre) */
+          .hero.has-pattern-dark::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 10px 10px;
+            mix-blend-mode: overlay;
+            opacity: 0.6;
+            z-index: 1;
+            pointer-events: none;
+          }
+
+          /* calque sombre pour renforcer le contraste et le "volume" */
+          .hero.has-pattern-dark::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.45) 100%);
+            z-index: 0;
+            pointer-events: none;
+          }
+
+          /* forcer le contenu au-dessus des calques */
+          .hero.has-pattern-dark .container {
+            position: relative;
+            z-index: 2;
+          }
+
+          /* rendu du titre */
+          .hero .hero-title {
+            color: #ffffff !important;
+            /* lettres en blanc */
+            font-size: 2.25rem;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            margin: 0 0 0.5rem;
+            text-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+            /* plus de relief */
+          }
+
+          /* rendu du texte du hero */
+          .hero .hero-text {
+            color: #ffffff !important;
+            /* lettres en blanc */
+            font-size: 1.05rem;
+            font-weight: 700;
+            opacity: 0.98;
+            margin: 0;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+          }
+
+          /* effet d'élévation : ombre et léger déplacement */
+          .hero.overlap {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+          }
+
+          /* responsive : augmenter la taille sur grands écrans */
+          @media (min-width: 900px) {
+            .hero .hero-title {
+              font-size: 2.75rem;
+            }
+
+            .hero .hero-text {
+              font-size: 1.125rem;
+            }
+          }
+        </style>
+
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <section class="hero has-pattern-dark overlap" aria-labelledby="hero-internet-title">
+              <div class="container">
+                <h1 id="hero-internet-title" class="hero-title" aria-level="1">Temp restant a votre journée a Meudon
+                </h1>
+                <p class="hero-text" aria-live="polite">
+
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
         <p id="userInfo" class="meta" style="margin-bottom: 1rem;"></p>
 
         <p class="text is-level-1">Heure locale actuelle :</p>
@@ -303,7 +407,7 @@
           }
         }, { passive: true });
 
-        
+
         timeImage.addEventListener('error', function () {
           timeImage.src = "https://www.bing.com/th/id/OIP.eUtHVgtGROvWrx20ysxOIAHaEK?w=248&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2";
           timeImage.alt = "Image de secours";
@@ -312,7 +416,7 @@
 
         startTicker();
         updateWeather();
-        setInterval(updateWeather, 15 * 60 * 1000); 
+        setInterval(updateWeather, 15 * 60 * 1000);
 
         window.__WORK_CONFIG = { WORK_START, WORK_END };
         window.__forceUpdateWorkClock = () => tick();
@@ -322,4 +426,5 @@
 
     })();
   </script>
-</html>
+
+</html>()

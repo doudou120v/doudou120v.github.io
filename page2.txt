@@ -1,11 +1,26 @@
 <!doctype html>
-<html lang="fr">
+<div
+    style="background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%); color: #fff; padding: 0.7rem 0; text-align: center; font-weight: bold; font-size: 1.1rem; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 0.7rem;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin" aria-hidden="true"
+        focusable="false">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+    <span>Montreuil</span>
+</div>
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Journée de travail — Paris</title>
     <link rel="stylesheet" href="https://assets.bouyguestelecom.fr/TRILOGY/trilogy-styles@4.10.0/default/trilogy.css">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Heure" />
+    <link rel="manifest" href="/site.webmanifest" />
     <style>
         #timeImage {
             display: block;
@@ -18,6 +33,150 @@
         .title.is-level-4 {
             text-align: center;
         }
+
+        #settingsBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10010;
+            background: #2777ed;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 24px;
+            box-shadow: 0 2px 8px #3333;
+            cursor: pointer;
+        }
+
+        #horairesModal {
+            display: none;
+            position: fixed;
+            z-index: 10100;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #horairesModal .modal-content {
+            background: #fff;
+            padding: 2em 2em 1em 2em;
+            border-radius: 12px;
+            min-width: 320px;
+            box-shadow: 0 4px 20px #2228;
+            position: relative;
+        }
+
+        #horairesModal label {
+            display: block;
+            margin-top: 1em;
+            font-weight: 500;
+        }
+
+        #horairesModal input[type="time"] {
+            width: 100%;
+            padding: .4em;
+            border-radius: 4px;
+            border: 1px solid #c3c3c3;
+            margin-top: 0.2em;
+        }
+
+        #closeModal {
+            position: absolute;
+            top: 7px;
+            right: 13px;
+            font-size: 1.3em;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero : textes en blanc + plus de volume */
+        .hero.has-pattern-dark {
+            color: #fff;
+            padding: 3rem 1rem;
+            /* plus d'espace vertical */
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            transform: translateZ(0);
+        }
+
+        /* motif léger derrière le hero (fusionné avec overlay sombre) */
+        .hero.has-pattern-dark::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 10px 10px;
+            mix-blend-mode: overlay;
+            opacity: 0.6;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* calque sombre pour renforcer le contraste et le "volume" */
+        .hero.has-pattern-dark::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.45) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* forcer le contenu au-dessus des calques */
+        .hero.has-pattern-dark .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* rendu du titre */
+        .hero .hero-title {
+            color: #ffffff !important;
+            /* lettres en blanc */
+            font-size: 2.25rem;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            margin: 0 0 0.5rem;
+            text-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+            /* plus de relief */
+        }
+
+        /* rendu du texte du hero */
+        .hero .hero-text {
+            color: #ffffff !important;
+            /* lettres en blanc */
+            font-size: 1.05rem;
+            font-weight: 700;
+            opacity: 0.98;
+            margin: 0;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+        }
+
+        /* effet d'élévation : ombre et léger déplacement */
+        .hero.overlap {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* responsive : augmenter la taille sur grands écrans */
+        @media (min-width: 900px) {
+            .hero .hero-title {
+                font-size: 2.75rem;
+            }
+
+            .hero .hero-text {
+                font-size: 1.125rem;
+            }
+        }
     </style>
 </head>
 
@@ -25,8 +184,37 @@
     <div class="full-page">
         <div class="card">
             <div class="card-content">
-                <p class="title is-level-4">Temps restant a votre journée</p>
+                <div class="columns is-multiline">
+                    <div class="column is-12">
+                        <section class="hero has-pattern-dark overlap" aria-labelledby="hero-internet-title">
+                            <div class="container">
+                                <h1 id="hero-internet-title" class="hero-title" aria-level="1">Temp restant a votre
+                                    journée a Montreuil</h1>
+                                <p class="hero-text" aria-live="polite">
 
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <button id="settingsBtn" title="Modifier les horaires">
+                    ⚙️
+                </button>
+                <div id="horairesModal">
+                    <div class="modal-content">
+                        <button id="closeModal" type="button">&times;</button>
+                        <h3 style="margin-top:0;">Modifier les horaires</h3>
+                        <form id="horairesForm" autocomplete="off">
+                            <label for="debut">Début de la journée :</label>
+                            <input type="time" id="debut" required>
+                            <label for="pause">Heure du déjeuner :</label>
+                            <input type="time" id="pause" required>
+                            <label for="fin">Fin de la journée :</label>
+                            <input type="time" id="fin" required>
+                            <button type="submit" style="margin-top:1em;">Enregistrer</button>
+                        </form>
+                    </div>
+                </div>
                 <p id="userInfo" class="meta" style="margin-bottom: 1rem;"></p>
 
                 <p class="text is-level-1">Heure locale actuelle :</p>
@@ -178,47 +366,6 @@
                 }
             }
 
-            function updateDayProgress(now) {
-                const startHM = parseHM(WORK_START);
-                const endHM = parseHM(WORK_END);
-                if (!startHM || !endHM) return;
-
-                const start = new Date(now);
-                start.setHours(startHM.hour, startHM.minute, 0, 0);
-                const end = new Date(now);
-                end.setHours(endHM.hour, endHM.minute, 0, 0);
-                if (end <= start) end.setDate(end.getDate() + 1);
-
-                if (now < start) {
-                    const diff = start - now;
-                    remainingTimeEl.textContent = msToHMS(diff);
-                    remainingLabelEl.textContent = 'Temps avant le début :';
-                    dayProgress.value = 0;
-                    dayProgress.setAttribute('aria-valuenow', '0');
-                    percentageLabel.textContent = 'La journée n’a pas encore commencé.';
-                    endMessage.style.display = 'none';
-                } else if (now >= end) {
-                    remainingTimeEl.textContent = '00:00:00';
-                    remainingLabelEl.textContent = 'Temps restant :';
-                    dayProgress.value = 100;
-                    dayProgress.setAttribute('aria-valuenow', '100');
-                    percentageLabel.textContent = '100% de la journée de travail écoulée';
-                    endMessage.style.display = 'block';
-                } else {
-                    const total = end - start;
-                    const elapsed = now - start;
-                    const remaining = total - elapsed;
-                    const pct = Math.max(0, Math.min(100, Number(((elapsed / total) * 100).toFixed(1))));
-
-                    remainingTimeEl.textContent = msToHMS(remaining);
-                    remainingLabelEl.textContent = 'Temps restant :';
-                    dayProgress.value = pct;
-                    dayProgress.setAttribute('aria-valuenow', String(pct));
-                    percentageLabel.textContent = `${pct}% de la journée de travail écoulée`;
-                    endMessage.style.display = 'none';
-                }
-            }
-
             function updateWeather() {
                 fetch(WEATHER_URL)
                     .then(response => response.json())
@@ -279,12 +426,59 @@
             }
 
             function tick() {
+                // Toujours relire les horaires les plus récentes
+                let WORK_START = localStorage.getItem("WORK_START") || "09:30";
+                let WORK_END = localStorage.getItem("WORK_END") || "17:00";
+                legendStart.textContent = formatLabelHM(WORK_START);
+                legendEnd.textContent = formatLabelHM(WORK_END);
+
                 const now = manualTime || getParisNow();
                 parisTimeEl.textContent = now.toLocaleTimeString('fr-FR', {
                     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
                 });
-                updateDayProgress(now);
+                updateDayProgress(now, WORK_START, WORK_END);
                 updateTimeImage(now);
+            }
+
+            function updateDayProgress(now, WORK_START, WORK_END) {
+                const startHM = parseHM(WORK_START);
+                const endHM = parseHM(WORK_END);
+                if (!startHM || !endHM) return;
+
+                const start = new Date(now);
+                start.setHours(startHM.hour, startHM.minute, 0, 0);
+                const end = new Date(now);
+                end.setHours(endHM.hour, endHM.minute, 0, 0);
+                if (end <= start) end.setDate(end.getDate() + 1);
+
+                if (now < start) {
+                    const diff = start - now;
+                    remainingTimeEl.textContent = msToHMS(diff);
+                    remainingLabelEl.textContent = 'Temps avant le début :';
+                    dayProgress.value = 0;
+                    dayProgress.setAttribute('aria-valuenow', '0');
+                    percentageLabel.textContent = 'La journée n’a pas encore commencé.';
+                    endMessage.style.display = 'none';
+                } else if (now >= end) {
+                    remainingTimeEl.textContent = '00:00:00';
+                    remainingLabelEl.textContent = 'Temps restant :';
+                    dayProgress.value = 100;
+                    dayProgress.setAttribute('aria-valuenow', '100');
+                    percentageLabel.textContent = '100% de la journée de travail écoulée';
+                    endMessage.style.display = 'block';
+                } else {
+                    const total = end - start;
+                    const elapsed = now - start;
+                    const remaining = total - elapsed;
+                    const pct = Math.max(0, Math.min(100, Number(((elapsed / total) * 100).toFixed(1))));
+
+                    remainingTimeEl.textContent = msToHMS(remaining);
+                    remainingLabelEl.textContent = 'Temps restant :';
+                    dayProgress.value = pct;
+                    dayProgress.setAttribute('aria-valuenow', String(pct));
+                    percentageLabel.textContent = `${pct}% de la journée de travail écoulée`;
+                    endMessage.style.display = 'none';
+                }
             }
 
             function startTicker() {
@@ -335,6 +529,39 @@
             init();
 
         })();
+        (function () {
+            let horaires = {
+                debut: localStorage.getItem('WORK_START') || "09:30",
+                pause: localStorage.getItem('LUNCH_TIME') || "12:30",
+                fin: localStorage.getItem('WORK_END') || "17:00"
+            };
+            document.getElementById('settingsBtn').onclick = function () {
+                document.getElementById('horairesModal').style.display = 'flex';
+                document.getElementById('debut').value = horaires.debut;
+                document.getElementById('pause').value = horaires.pause;
+                document.getElementById('fin').value = horaires.fin;
+            };
+            document.getElementById('closeModal').onclick = () =>
+                document.getElementById('horairesModal').style.display = 'none';
+            document.getElementById('horairesModal').onclick = function (e) {
+                if (e.target === this) this.style.display = 'none';
+            };
+            document.getElementById('horairesForm').onsubmit = function (e) {
+                e.preventDefault();
+                horaires.debut = document.getElementById('debut').value;
+                horaires.pause = document.getElementById('pause').value;
+                horaires.fin = document.getElementById('fin').value;
+                localStorage.setItem('WORK_START', horaires.debut);
+                localStorage.setItem('LUNCH_TIME', horaires.pause);
+                localStorage.setItem('WORK_END', horaires.fin);
+                document.getElementById('horairesModal').style.display = 'none';
+                // ==> MET A JOUR TOUT L'AFFICHAGE
+                if (window.__forceUpdateWorkClock) window.__forceUpdateWorkClock();
+            };
+        })();
     </script>
+    </script>
+
+</body>
 
 </html>

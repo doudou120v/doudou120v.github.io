@@ -33,20 +33,16 @@
     <div class="card">
       <div class="card-content">
 
-        <!-- Styles à ajouter dans <head> (ou fusionner avec vos styles existants) -->
         <style>
-          /* Hero : textes en blanc + plus de volume */
           .hero.has-pattern-dark {
             color: #fff;
             padding: 3rem 1rem;
-            /* plus d'espace vertical */
             position: relative;
             overflow: hidden;
             border-radius: 10px;
             transform: translateZ(0);
           }
 
-          /* motif léger derrière le hero (fusionné avec overlay sombre) */
           .hero.has-pattern-dark::before {
             content: "";
             position: absolute;
@@ -59,7 +55,6 @@
             pointer-events: none;
           }
 
-          /* calque sombre pour renforcer le contraste et le "volume" */
           .hero.has-pattern-dark::after {
             content: "";
             position: absolute;
@@ -69,29 +64,23 @@
             pointer-events: none;
           }
 
-          /* forcer le contenu au-dessus des calques */
           .hero.has-pattern-dark .container {
             position: relative;
             z-index: 2;
           }
 
-          /* rendu du titre */
           .hero .hero-title {
             color: #ffffff !important;
-            /* lettres en blanc */
             font-size: 2.25rem;
             line-height: 1.05;
             font-weight: 800;
             letter-spacing: 0.6px;
             margin: 0 0 0.5rem;
             text-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-            /* plus de relief */
           }
 
-          /* rendu du texte du hero */
           .hero .hero-text {
             color: #ffffff !important;
-            /* lettres en blanc */
             font-size: 1.05rem;
             font-weight: 700;
             opacity: 0.98;
@@ -99,14 +88,12 @@
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
           }
 
-          /* effet d'élévation : ombre et léger déplacement */
           .hero.overlap {
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 6px 18px rgba(0, 0, 0, 0.2);
             transform: translateY(-10px);
             border: 1px solid rgba(255, 255, 255, 0.04);
           }
 
-          /* responsive : augmenter la taille sur grands écrans */
           @media (min-width: 900px) {
             .hero .hero-title {
               font-size: 2.75rem;

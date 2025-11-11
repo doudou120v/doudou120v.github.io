@@ -74,9 +74,19 @@
         }
 
         #dev-mode {
-            bottom: 10%;
-            font-family: monospace;
+            position: fixed;
+            min-width: 350px;
+            min-height: 150px;
+        }
+
+        #close-devmode-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 28px;
             color: #fff;
+            z-index: 10001;
         }
 
         #code-box {
@@ -90,8 +100,9 @@
             text-align: left;
         }
 
-        .show-code-btn {
-            margin: 0.5rem;
+        #show-code-btn,
+        #close-code-btn {
+            margin-top: 1rem;
             padding: 0.5rem 1rem;
             background-color: #ccc;
             border: none;
@@ -101,13 +112,18 @@
             color: black;
         }
 
-        .code-section {
-            display: none;
-            margin-top: 1rem;
+        ul {
+            list-style: none;
+            padding-left: 0;
         }
 
-        .code-section.active {
-            display: block;
+        ul li {
+            margin: 0.5rem 0;
+        }
+
+        ul li a {
+            color: #00d1b2;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -125,9 +141,11 @@
 
     <div class="container">
         <div class="box">
+
             <img src="https://avatars.githubusercontent.com/u/52258372?v=4" alt="Photo de Doudou120" class="photo"
                 id="profile-photo" title="Cliquez pour agrandir" onclick="togglePhotoSize()" />
-
+            <h3 class=" section-title">
+            </h3>
             <h2 class="title is-level-3">Je m'appelle Doudou120 (le développeur) aka Vincent (l'élève)</h2>
 
             <div class="text-block">
@@ -153,6 +171,11 @@
                 <p>Ce stage m'a permis de mieux comprendre le monde du travail et celui de l'informatique. Il m'a aussi
                     fait découvrir une nouvelle passion : le code.</p>
                 <p><em>(Astuce : tape le "Konami Code" pour une surprise.)</em></p>
+                <div class="segmented-control" style="margin: 20px 1; text-align: center;">
+                    <a href="index.html" class="segmented-control-item">Accueil</a>
+                    <a href="page1.html" class="segmented-control-item">Météo de Meudon</a>
+                    <a href="page2.html" class="segmented-control-item">Météo de Montreuil</a>
+                </div>
             </div>
         </div>
     </div>
@@ -163,75 +186,26 @@
     </div>
 
     <div id="dev-mode">
+        <span id="close-devmode-btn"
+            style="position:absolute;top:10px;right:20px;cursor:pointer;font-size:28px;">&times;</span>
         <h3>Mode développeur activé</h3>
-        <p>Bienvenue dans les coulisses du code, Vincent.</p>
+        <p>Bienvenue dans les coulisses du code de Vincent.</p>
         <button id="show-code-btn" onclick="document.getElementById('code-box').style.display='block'">Souhaitez-vous
-            voir le code des pages ?</button>
+            voir les fichiers du projet ?</button>
     </div>
 
     <div id="code-box">
-        <h4>Fichiers du projet</h4>
-        <div>
-            <button class="show-code-btn" onclick="showCode('index')">index.html</button>
-            <button class="show-code-btn" onclick="showCode('about')">about.html</button>
-            <button class="show-code-btn" onclick="showCode('page1')">page1.html</button>
-        </div>
-
-        <div id="code-index" class="code-section active">
-            <h5>index.html</h5>
-            <pre>
-&lt;!doctype html&gt;
-&lt;html lang="fr"&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8" /&gt;
-  &lt;title&gt;Bienvenue&lt;/title&gt;
-  ...
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;a href="/page1.html"&gt;Météo&lt;/a&gt;
-  &lt;a href="/about.html"&gt;À propos de moi&lt;/a&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-      </pre>
-        </div>
-
-        <div id="code-about" class="code-section">
-            <h5>about.html</h5>
-            <pre>
-&lt;!doctype html&gt;
-&lt;html lang="fr"&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8" /&gt;
-  &lt;title&gt;À propos de moi&lt;/title&gt;
-  ...
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h2&gt;Je m'appelle Doudou120&lt;/h2&gt;
-  &lt;p&gt;Stage chez Bouygues Telecom Pro&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-      </pre>
-        </div>
-
-        <div id="code-page1" class="code-section">
-            <h5>page1.html</h5>
-            <pre>
-&lt;script&gt;
-function msToHMS(ms) {
-  let seconds = Math.floor(ms / 1000);
-  let hours = Math.floor(seconds / 3600);
-  seconds %= 3600;
-  let minutes = Math.floor(seconds / 60);
-  seconds %= 60;
-  return [hours, minutes, seconds].map(v =&gt; String(v).padStart(2, '0')).join(':');
-}
-&lt;/script&gt;
-      </pre>
-        </div>
+        <h4>Accès aux fichiers du projet</h4>
+        <ul>
+            <li><a href="index.txt" target="_blank">Voir index.txt</a></li>
+            <li><a href="about.txt" target="_blank">Voir about.txt</a></li>
+            <li><a href="page1.txt" target="_blank">Voir page1.txt</a></li>
+            <li><a href="page2.txt" target="_blank">Voir page2.txt</a></li>
+        </ul>
+        <button id="close-code-btn" onclick="document.getElementById('code-box').style.display='none'">Fermer</button>
     </div>
 
     <script>
-        // Konami Code
         const konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
         let konamiIndex = 0;
         document.addEventListener('keydown', function (e) {
@@ -250,9 +224,11 @@ function msToHMS(ms) {
             }
         });
 
-        // DevMode activation
         let devBuffer = '';
         document.addEventListener('keydown', function (e) {
+            document.getElementById('close-devmode-btn').onclick = function () {
+                document.getElementById('dev-mode').style.display = 'none';
+            }
             const key = e.key.toLowerCase();
             devBuffer += key;
             if (devBuffer.length > 10) devBuffer = devBuffer.slice(-10);
@@ -261,14 +237,6 @@ function msToHMS(ms) {
                 alert("Mode développeur activé.");
             }
         });
-
-        // Onglets de code
-        function showCode(section) {
-            const sections = document.querySelectorAll('.code-section');
-            sections.forEach(s => s.classList.remove('active'));
-            const target = document.getElementById('code-' + section);
-            if (target) target.classList.add('active');
-        }
     </script>
 </body>
 
